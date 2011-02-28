@@ -1,0 +1,141 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass";
+@import "compass/reset";
+
+html, body {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+body {
+	font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background: #ccc;
+}
+
+$multiplier-x: 1;
+$multiplier-y: 1;
+
+$canvas-width: 200px * $multiplier-x;
+$canvas-height: 200px * $multiplier-y;
+
+$wheel-width: 1000px * $multiplier-x;
+$wheel-height: 1000px * $multiplier-y;
+
+$section-width: 100px * $multiplier-x;
+$section-height: 100px * $multiplier-y;
+
+.hidden {
+	display: none;
+}
+
+.canvas {
+	font-weight: bold;
+	color: #666;
+	display: block;
+	overflow: visible;
+	
+	h1 {
+		margin: 10px;
+		line-height: 1;
+	}
+	
+	.position {
+		width: 100%;
+		height: 100%;
+		
+		.wheel .page {
+			margin: 0 auto 10px;
+			width: $section-width;
+			height: $section-height;
+			line-height: $section-height;
+			text-align: center;
+			background: #bbb;
+		}
+	}
+}
+
+html.csstransforms {
+	body {
+		overflow: hidden;
+	}
+	
+/*	.canvas * {
+		@include transform(translate(0, 0, 0));
+		@include experimental(backface-visibility, hidden);
+	}
+*/
+	.canvas {
+		margin-left: -($canvas-width / 2);
+		margin-top: -($canvas-height / 2);
+		top: 50%;
+		left: 50%;
+		position: absolute;
+		width: $canvas-width;
+		height: $canvas-height;
+		
+		h1 {
+			margin: 0;
+			line-height: $section-height;
+		}
+
+		> .position {
+			width: 100%;
+			height: 100%;
+
+			> .wheel {
+				margin-left: -($wheel-width / 2);
+				margin-top: -($section-height / 2);
+				top: 50%;
+				left: 50%;
+				position: absolute;
+				display: block;
+				width: $wheel-width;
+				height: $wheel-height;
+
+				> .page {
+					margin-left: -($section-width / 2);
+					top: 0;
+					left: 50%;
+					position: absolute;
+					width: $section-width;
+					height: $section-height;
+					line-height: $section-height;
+					text-align: center;
+/*					-webkit-box-reflect: below 4px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.8, transparent), to(white));*/
+
+					> .flip {
+						@include transform(rotate(180deg));
+					}
+				}
+			}
+		}
+	}
+
+	$inner-wheel-width: $wheel-width / 2;
+	$inner-wheel-height: $wheel-width / 2;
+
+	.inner {
+		top: auto;
+		bottom: 100%;
+		margin-bottom: 50px;
+		opacity: 0;
+
+		> .position > .wheel {
+			top: auto;
+			bottom: 0;
+			margin-left: -($inner-wheel-width / 2);
+			width: $inner-wheel-width;
+			height: $inner-wheel-height;
+
+			> .page {
+				background: #aaa;
+				-webkit-box-reflect: none;
+			}
+		}
+	}
+}

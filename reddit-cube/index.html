@@ -1,0 +1,132 @@
+<!doctype html>
+	<html lang="en" class="no-js">
+	<head>
+		<meta charset="utf-8" />
+		<title>Reddit Cube</title>
+		
+		<!--  Mobile viewport optimized: j.mp/bplateviewport -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+		<link rel="stylesheet" href="/css/style.css" type="text/css" media="all" charset="utf-8" />
+	</head>
+
+	<body>
+		<section>
+			<ul>
+				<li data-rotation="rotateX(-90deg)" data-url="http://reddit.com/r/programming/">
+					<h1>/r/programming</h1>
+				</li>
+				<li data-rotation="rotateY(0)" data-url="http://reddit.com/r/gaming/">
+					<h1>/r/gaming</h1>
+				</li>
+				<li data-rotation="rotateY(-90deg)" data-url="http://reddit.com/r/science/">
+					<h1>/r/science</h1>
+				</li>
+				<li data-rotation="rotateY(-180deg)" data-url="http://reddit.com/r/technology/">
+					<h1>/r/technology</h1>
+				</li>
+				<li data-rotation="rotateY(-270deg)" data-url="http://reddit.com/r/comics/">
+					<h1>/r/comics</h1>
+				</li>
+				<li data-rotation="rotateX(90deg)" data-url="http://reddit.com/r/secretsanta/">
+					<h1>/r/secretsanta</h1>
+				</li>
+			</ul>
+		</section>
+		
+		<div id="loading"><h2>Loading...</h2></div>
+		
+		<div id="buttons">
+			<button class="explode">Explode</button>
+			<button class="unfold">Unfold</button>
+		</div>
+		
+		<aside>
+			<p>(Use &larr; &uarr; &rarr; &darr; arrows)</p>
+		</aside>
+		
+		<script type="text/javascript">
+			var translateValue = "translate3d(0, 0, -1200px)";
+			
+			document.addEventListener("DOMContentLoaded", function () {
+				var rotateX = 0, rotateY = 0, i, j,
+				    button = document.querySelector("button"),
+				    loading = document.querySelector("#loading"),
+				    section = document.querySelector("section"),
+				    list = section.querySelector("ul"),
+				    items = list.querySelectorAll("li"),
+				    listCount = items.length, iframeLoadCount = 0;
+				
+				
+				function loadSynchronous (item) {
+					var iframe = document.createElement("iframe");
+					iframe.setAttribute("src", item.getAttribute("data-url"));
+					
+					iframe.addEventListener("load", function () {
+						if (listCount === (++iframeLoadCount)) {
+							window.setTimeout(function() {
+								section.className = "";
+								list.className = "";
+								loading.className = "done";
+								
+								list.style.webkitTransform = translateValue;
+
+								document.addEventListener("keydown", function(e) {
+									switch(e.keyCode) {
+									case 37: // left
+										rotateY -= 90;
+										break;
+
+									case 38: // up
+										rotateX += 90;
+										break;
+
+									case 39: // right
+										rotateY += 90;
+										break;
+
+									case 40: // down
+										rotateX -= 90;
+										break;
+									};
+
+									list.style.webkitTransform = translateValue + " rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg)";
+								}, false);
+
+								document.querySelector("button.explode").addEventListener("click", function (e) {
+									e.preventDefault();
+
+									if (section.className) {
+										section.className = "";
+										button.firstChild.nodeValue = "Explode";
+									} else {
+										section.className += " explode";
+										button.firstChild.nodeValue = "Implode";
+									}
+								})
+
+								document.querySelector("button.unfold").addEventListener("click", function (e) {
+									section.className = "unfold";
+								})
+							}, 500);
+						}
+					}, false);
+					
+					item.appendChild(iframe);
+				}
+				
+				var i = 0;
+				
+				var synchronous = window.setInterval(function () {
+					if (listCount !== i) {
+						loadSynchronous(items[i++]);
+					} else {
+						window.clearInterval(synchronous);
+					}
+				}, 1000);
+				
+				section.className += " explode";
+				list.className += " loading";
+			}, false);
+		</script>
+	</body>
+</html>

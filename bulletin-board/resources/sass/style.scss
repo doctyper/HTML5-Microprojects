@@ -1,0 +1,95 @@
+$parent-dimension: 2000px;
+$child-dimension: $parent-dimension * 0.1;
+$translate-z: -1200px;
+$margin-offset: $child-dimension * 0.02;
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+}
+
+html, body, section {
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	
+	* {
+		-webkit-transform: translate3d(0, 0, 0);
+	}
+}
+
+section {
+	background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#222));
+	
+	ul.tree {
+		margin: 0 auto;
+		width: $parent-dimension;
+		height: $parent-dimension;
+		overflow: hidden;
+		-webkit-perspective: 800;
+		-webkit-perspective-origin: center center;
+		-webkit-transform-origin: center center;
+		-webkit-transition: all 350ms ease-in-out;
+		-webkit-transition-property: -webkit-transform, opacity, -webkit-perspective-origin;
+		
+		li {
+			margin: $margin-offset;
+			float: left;
+			width: $child-dimension - ($margin-offset * 2);
+			height: $child-dimension - ($margin-offset * 2);
+		
+			-webkit-transform: translate3d(0, 0, $translate-z) rotateY(0);
+			-webkit-transition: all 500ms ease-in-out;
+			-webkit-transform-style: preserve-3d;
+			opacity: 0;
+			
+			&.loaded {
+				-webkit-transition-duration: 350ms;
+				-webkit-transform: translate3d(0, 0, 0) rotateY(0);
+				opacity: 1;
+			}
+			
+			&.active {
+				-webkit-transition-duration: 350ms;
+				-webkit-transform: translate3d(0, 0, 0) rotateY(360deg);
+			}
+			
+			&.inactive {
+				-webkit-transition-duration: 350ms;
+				-webkit-transform: translate3d(0, 0, $translate-z) rotateY(-180deg);
+				opacity: 0.1;
+			}
+		}
+	}
+	
+	ul.filter {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		z-index: 2;
+		background: rgba(0, 0, 0, 0.8);
+		
+		li {
+			margin: 20px 10px;
+			display: inline-block;
+			
+			a {
+				font-weight: bold;
+				padding: 5px 10px;
+				color: rgba(255, 255, 255, 0.9);
+				text-decoration: none;
+				
+				border: 1px solid rgba(255, 255, 255, 0.3);
+				background: rgba(0, 0, 0, 0.2);
+				
+				&:hover {
+					background: rgba(255, 255, 255, 0.2);
+				}
+			}
+		}
+	}
+}

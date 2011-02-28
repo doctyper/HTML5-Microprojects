@@ -1,0 +1,66 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass";
+@import "compass/reset";
+
+* {
+	@include box-sizing(border-box);
+	@include transform(translate3d(0, 0, 0));
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	background: #111;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#viewport {
+	@include perspective(800);
+	@include perspective-origin(center center);
+	@include transform-origin(center center);
+	
+	section {
+		margin: 20px auto;
+		display: block;
+		padding: 20px;
+		width: 1024px;
+		height: 768px;
+		background: #fff;
+		@include box-sizing(border-box);
+		@include transform-style(preserve-3d);
+		opacity: 0.5;
+
+		h1 {
+			margin-bottom: 0.5em;
+			font-size: 2em;
+			font-weight: bold;
+		}
+
+		p {
+			font-size: 0.9em;
+		}
+
+		&:nth-of-type(1) {
+			@include transform(translate3d(0, 0, -100px), true);
+		}
+
+		&:nth-of-type(2) {
+			@include transform(translate3d(0, -1046px, -300px), true);
+		}
+
+		&:nth-of-type(3) {
+			@include transform(translate3d(0, -1046px * 2, -500px), true);
+		}
+
+		&:nth-of-type(4) {
+			@include transform(translate3d(0, -1046px * 3, -700px), true);
+		}
+	}
+}

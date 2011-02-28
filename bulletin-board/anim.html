@@ -1,0 +1,50 @@
+<!doctype html>
+	<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>CSS3 Transforms Demo</title>
+		
+		<style type="text/css" media="screen">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			@-webkit-keyframes spin {
+				from {
+					-webkit-transform: rotate(0);
+				}
+				
+				to {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			#mask {
+				margin: 20px;
+				width: 100px;
+				height: 100px;
+				overflow: hidden;
+				border: 1px solid #000;
+			}
+			
+			#circle {
+				margin-top: -50%;
+				margin-left: -50%;
+				width: 200%;
+				height: 200%;
+				border-radius: 50px;
+				background: -webkit-gradient(linear, left top, left bottom, from(#999), to(#111), color-stop(50%, #999), color-stop(50%, #111));
+				
+				-webkit-animation: spin 2s linear;
+				-webkit-animation-iteration-count: infinite;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="mask">
+			<div id="circle"></div>
+		</div>
+	</body>
+</html>
